@@ -27,4 +27,4 @@
 
 
 ### logs ###
-logs
+/logs/*.log*
