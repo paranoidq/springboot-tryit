@@ -52,12 +52,6 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <!--optional=true 表示依赖不会传递，换句话说，其他依赖该项目的项目，如果想要使用 devtools，需要重新引入-->
-            <optional>true</optional>
-        </dependency>
         <!--///////////////////////// spring boot core /////////////////////////-->
 
 
@@ -148,6 +142,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
         <!--嵌入式数据库-->
         <!--<dependency>-->
         <!--<groupId>org.hsqldb</groupId>-->
@@ -218,6 +218,17 @@
         <!--</dependency>-->
         <!--///////////////////////// mail /////////////////////////-->
 
+
+        <!--///////////////////////// dev /////////////////////////-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!--optional=true 表示依赖不会传递，换句话说，其他依赖该项目的项目，如果想要使用 devtools，需要重新引入-->
+            <optional>true</optional>
+        </dependency>
+        <!--///////////////////////// dev /////////////////////////-->
+
+
     </dependencies>
 
 
@@ -235,6 +246,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
 
             <plugin>
