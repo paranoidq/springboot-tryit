@@ -60,8 +60,8 @@
         <!--main logger-->
         <Logger name="me.test" level="debug" additivity="false">
             <AppenderRef ref="CONSOLE"/>
-            <AppenderRef ref="FILE"/>
-            <AppenderRef ref="ROLLING"/>
+            <!--<AppenderRef ref="FILE"/>-->
+            <!--<AppenderRef ref="ROLLING"/>-->
         </Logger>
 
         <!--specific logger-->

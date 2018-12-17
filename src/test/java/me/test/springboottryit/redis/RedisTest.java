@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringbootTryitApplication.class)
+@SpringBootTest(classes = SpringbootTryitApplication.class, properties = {"spring.profiles.active=prod"})
 public class RedisTest {
 
     @Autowired
@@ -38,7 +38,7 @@ public class RedisTest {
 
         TimeUnit.SECONDS.sleep(1);
 
-        assert redisUtil.hasKey("com.neox") == false;
+        assert redisUtil.hasKey("com.neox.f") == false;
     }
 
 }

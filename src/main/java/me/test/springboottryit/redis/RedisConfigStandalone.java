@@ -1,5 +1,6 @@
 package me.test.springboottryit.redis;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 @PropertySource("${redis.config}")
 @ConditionalOnProperty(name = "redis.mode", havingValue = "standalone")
 public class RedisConfigStandalone {
+
+    @Autowired
+    RedisConfig redisCommons;
 
     @Value("${redis.hostName}")
     private String hostName;
@@ -65,7 +69,7 @@ public class RedisConfigStandalone {
     @Bean
     public RedisTemplate<String, Object> functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        RedisConfig.initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
+        redisCommons.initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
 }

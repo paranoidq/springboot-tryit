@@ -1,5 +1,6 @@
 package me.test.springboottryit.redis;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,9 @@ import java.util.Set;
 @PropertySource("${redis.config}")
 @ConditionalOnProperty(name = "redis.mode", havingValue = "cluster")
 public class RedisConfigCluster {
+
+    @Autowired
+    RedisConfig redisCommons;
 
     @Value("${redis.password}")
     private String password;
@@ -83,7 +87,7 @@ public class RedisConfigCluster {
     @Bean
     public RedisTemplate<String, Object> functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        RedisConfig.initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
+        redisCommons.initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * @author paranoidq
@@ -16,7 +17,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     public User(String name, Integer age) {
         this.name = name;

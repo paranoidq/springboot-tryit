@@ -115,6 +115,11 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.51</version>
+        </dependency>
         <!--///////////////////////// utils, tools /////////////////////////-->
 
         <!--///////////////////////// template /////////////////////////-->
