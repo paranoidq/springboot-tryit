@@ -1,5 +1,6 @@
 package me.test.springboottryit.security;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -27,6 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            .permitAll()
             .authorizeRequests()
             .antMatchers("**/*").permitAll()
+        ;
+
+
+        // actuator端点安全配置
+        http.requestMatcher(EndpointRequest.toAnyEndpoint())
+            .authorizeRequests()
+            .anyRequest()
+            .permitAll()
         ;
     }
 

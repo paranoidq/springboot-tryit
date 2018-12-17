@@ -2,8 +2,9 @@ package me.test.springboottryit.task.schedule;
 
 import me.test.springboottryit.config.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,9 +14,9 @@ import java.util.Date;
  * @since 1.0.0
  */
 // @EnableScheduling标注main boot class
-@Component
+@Configuration
+@EnableScheduling
 public class ScheduleTask {
-
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 
     @Autowired

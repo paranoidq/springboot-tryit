@@ -1,6 +1,7 @@
 package me.test.springboottryit.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,10 +15,8 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class User {
-
-    public User() {
-    }
 
     public User(String name, Integer age) {
         this.name = name;
