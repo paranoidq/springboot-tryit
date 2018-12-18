@@ -5,8 +5,8 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
 
 /**
  * @author paranoidq
@@ -22,10 +22,16 @@ public class ListenerConfig {
         return registrationBean;
     }
 
-    public class Listener1 implements HttpSessionListener {
+    public class Listener1 implements ServletRequestListener {
+
         @Override
-        public void sessionCreated(HttpSessionEvent se) {
-            log.info("ServletListener invoked");
+        public void requestDestroyed(ServletRequestEvent sre) {
+            log.info("Servlet request destroyed");
+        }
+
+        @Override
+        public void requestInitialized(ServletRequestEvent sre) {
+            log.info("Servlet request initialized");
         }
     }
 }

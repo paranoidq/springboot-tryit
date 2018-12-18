@@ -27,7 +27,7 @@ public class UploadController {
             /*
              * addAttribute vs addFlashAttribute
              * 前者是将属性放到request的参数中，进行redirect，因此受到http报文长度限制
-             * 后者则是将属性放到一个临时的FlashMap中，这个FlashMap是存储在session中的，因此不受http报文长度的限制
+             * 后者则是将属性放到一个临时的FlashMap中，这个FlashMap是存储在session中的，因此不受http报文长度的限制，并且在重定向之后被立即移除
              */
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:/uploadStatus";    // just for test
