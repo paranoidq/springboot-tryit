@@ -1,0 +1,202 @@
+# yml缺点：
+# 不支持@PropertySource注解，也就意味着不能导入额外的配置文件（这点很不好呀）
+# multi-profile设置不方便
+
+
+server:
+    servlet:
+        context-path: /app
+
+    undertow:
+        accesslog:
+            # Undertow access log directory.
+            dir: undertow/logs/
+            # Enable access log.
+            enabled: false
+            # Format pattern for access logs.
+            pattern: common
+            # Log file name prefix.
+            prefix: access_log.
+            # Enable access log rotation. (? 没有指定如何rotate)
+            rotate: true
+            # Log file name suffix.
+            suffix: log
+        # Allocate buffers outside the Java heap.
+        direct-buffers: true
+        # Whether servlet filters should be initialized on startup
+        # eager初始化可以提升运行时的速度
+        eager-filter-init: true
+        # Number of I/O threads to create for the worker.
+        io-threads: 8
+        # Maximum size in bytes of the HTTP post content.（限制http post报文大小）
+        max-http-post-size: -1
+        # Number of worker threads.
+        worker-threads: 16
+        # Size of each buffer in bytes.
+        buffer-size: 1024
+
+spring:
+    #--------------- profile configuration start ---------------#
+    profiles:
+        active: prod
+    #--------------- profile configuration start ---------------#
+    aop:
+        # Add @EnableAspectJAutoProxy. (添加aop starter后默认开启)
+        auto: true
+        # Whether subclass-based (CGLIB) proxies are to be created (true) as opposed to standard Java interface-based proxies (false).
+        proxy-target-class: false
+
+    #--------------- standalone cache configuration start ---------------#
+    cache:
+        ehcache:
+            config: classpath:ehcache.xml
+         # 强制指定cache类型
+        type: ehcache
+    #--------------- standalone configuration end ---------------#
+
+    #--------------- datasource configuration end ---------------#
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/springboottryit?
+        username: root
+        password: 88863650qw
+        hikari:
+            auto-commit: true
+            connection-test-query: SELECT 1
+            connection-timeout: 30000
+            idle-timeout: 30000
+            max-lifetime: 1800000
+            maximum-pool-size: 15
+            minimum-idle: 5
+            pool-name: DatebookHikariCP
+
+    #--------------- datasource configuration end ---------------#
+
+    #--------------- dev configuration start ---------------#
+    devtools:
+        restart:
+            additional-paths: ''
+    #--------------- dev configuration end ---------------#
+
+
+    #--------------- jpa configuration start ---------------#
+    #validate 加载hibernate时，验证创建数据库表结构
+    #create 每次加载hibernate，重新创建数据库表结构，这就是导致数据库表数据丢失的原因。
+    #create-drop 加载hibernate时创建，退出是删除表结构
+    #update 加载hibernate自动更新数据库结构
+    jpa:
+        properties:
+            hibernate:
+                hbm2ddl:
+                    auto: none
+                show_sql: true
+    #--------------- jpa configuration end ---------------#
+
+    servlet:
+        #--------------- fileupload configuration start ---------------#
+        multipart:
+            #默认支持文件上传.
+            enabled: true
+            #支持文件写入磁盘.
+            file-size-threshold: 0B
+            # 上传文件的临时目录
+            location: /Users/paranoidq/git-repo/springboot-tryit/upload/tmp
+            # 最大支持文件大小
+            max-file-size: 100MB
+            # 最大支持请求大小
+            max-request-size: 100MB
+            resolve-lazily: false
+        #--------------- fileupload configuration end ---------------#
+
+    #--------------- thymeleaf configuration start---------------#
+    thymeleaf:
+        # Enable template caching.
+        cache: false
+        # Enable MVC Thymeleaf view resolution.
+        enabled: true
+        # Template encoding.
+        encoding: utf-8
+         # Template mode to be applied to templates. See also StandardTemplateModeHandlers.
+        mode: HTML
+        # Prefix that gets prepended to view names when building a URL.
+        # Prefix必须以/结尾，必须以classpath开头
+        prefix: classpath:templates/app/
+        servlet:
+            # Content-Type.
+            content-type: text/html
+        # Suffix that gets appended to view names when building a URL.
+        suffix: .html
+        # Check that the templates location exists.
+        check-template-location: true
+        # Comma-separated list of view names that can be resolved.
+        view-names:
+        # Comma-separated list of view names that should be excluded from resolution.
+        excluded-view-names:
+        # Order of the template resolver in the chain.
+        template-resolver-order:
+    #--------------- thymeleaf configuration end ---------------#
+
+
+#--------------- custom configuration start ---------------#
+app:
+   properties:
+       referenceTest: ${app.properties.test}
+       test: default
+       testRandomInt: ${random.int(10)}   // < 10
+       testRandomRange: ${random.int[10, 20]}  // 10 - 20
+       testRandomString: ${random.value}
+       testUUID: ${random.uuid}
+#--------------- custom configuration end ---------------#
+
+
+#--------------- log configuration start ---------------#
+logging:
+    config: classpath:envs/${spring.profiles.active}/log4j2.xml
+#--------------- log configuration end ---------------#
+
+
+#--------------- management configuration start ---------------#
+management:
+    endpoint:
+        health:
+            # 开启details，显示health细节，默认不限制details
+            show-details: always
+        shutdown:
+            enabled: true
+    # 指定jmx、web公开的端点，默认只暴露/health和/info
+    endpoints:
+        jmx:
+            exposure:
+                include: '*'
+        web:
+            base-path: /management
+            cors:
+                allowed-methods: GET, POST
+                allowed-origins: '*'
+            exposure:
+                exclude: ''
+                include: '*'
+# 指定自定义info，@分隔符需要配置maven-resources-plugin中的delimiters为@
+info:
+    build:
+        artifact: '@project.artifactId@'
+        description: '@project.description@'
+        name: '@project.name@'
+        version: '@project.version@'
+#--------------- management configuration start ---------------#
+
+
+#--------------- mybatis configuration start ---------------#
+mybatis:
+    type-aliases-package: me.test.springboottryit.domain
+#--------------- mybatis configuration end ---------------#
+
+
+#--------------- redis configuration start ---------------#
+redis:
+    config: classpath:envs/${spring.profiles.active}/redis.properties
+    # standalone-单机模式，cluster-集群模式
+    mode: standalone
+#--------------- redis configuration end ---------------#
+

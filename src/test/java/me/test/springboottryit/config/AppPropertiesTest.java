@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringbootTryitApplication.class)
+@SpringBootTest(classes = SpringbootTryitApplication.class, properties = {"spring.profiles.active=prod"})
 public class AppPropertiesTest {
 
     @Autowired
