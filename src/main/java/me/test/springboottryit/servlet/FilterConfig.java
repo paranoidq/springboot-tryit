@@ -16,24 +16,24 @@ import java.io.IOException;
 @Slf4j
 public class FilterConfig {
 
-    @Bean("filter1")
-    public FilterRegistrationBean register() {
-
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new Filter1());
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.addInitParameter("paraKey", "paraValue");
-        registrationBean.setName("filter1");
-        registrationBean.setOrder(1);
-        return registrationBean;
-    }
-
-    public class Filter1 implements Filter {
-        @Override
-        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-            log.info("=== Servlet Filter invoked");
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
-    }
+//    @Bean("filter1")
+//    public FilterRegistrationBean register() {
+//
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        registrationBean.setFilter(new Filter1());
+//        registrationBean.addUrlPatterns("/*");
+//        registrationBean.addInitParameter("paraKey", "paraValue");
+//        registrationBean.setName("filter1");
+//        registrationBean.setOrder(1);
+//        return registrationBean;
+//    }
+//
+//    public class Filter1 implements Filter {
+//        @Override
+//        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+//            log.info("=== Servlet Filter invoked");
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        }
+//    }
 
 }

@@ -2,7 +2,6 @@ package me.test.springboottryit.repository;
 
 import me.test.springboottryit.SpringbootTryitApplication;
 import me.test.springboottryit.domain.User;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

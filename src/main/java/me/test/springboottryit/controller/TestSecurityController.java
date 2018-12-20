@@ -1,7 +1,7 @@
 package me.test.springboottryit.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author paranoidq
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestSecurityController {
 
-    @RequestMapping("/")
+    @GetMapping(path = {"/", "/home"})
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/hello")
+    @GetMapping("/hello")
     public String hello() {
         return "hello";
     }
 
-    @RequestMapping("/loging")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
