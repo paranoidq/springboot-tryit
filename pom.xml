@@ -11,11 +11,69 @@
     <groupId>me.test</groupId>
     <artifactId>springboot-tryit</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+
+    <packaging>jar</packaging>
+
     <name>springboot-tryit</name>
     <description>springboot-tryit</description>
+    <url>https://github.com/paranoidq/springboot-tryit</url>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active-profile>dev</active-profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <active-profile>prod</active-profile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <active-profile>test</active-profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <active-profile>release</active-profile>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <developers>
+        <developer>
+            <name>Wei Qian</name>
+            <email>paranoid_qian@163.com</email>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor></contributor>
+    </contributors>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
 
     <properties>
+        <project.finalName>springboot-tryit</project.finalName>
+
         <java.version>1.8</java.version>
     </properties>
 
@@ -208,6 +266,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!--图形验证码-->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-config</artifactId>
+            <version>1.1.6.RELEASE</version>
+        </dependency>
         <!--///////////////////////// security /////////////////////////-->
 
         <!--///////////////////////// monitor /////////////////////////-->
@@ -241,24 +305,56 @@
 
     <build>
 
+        <!--4.1 基本配置-->
+        <!-- 编译输出目录, 默认值不建议修改 -->
+        <directory>${project.basedir}/target</directory>
+        <!-- 源码目录 -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <!-- 测试源码目录 -->
+        <testSourceDirectory>src/main/java</testSourceDirectory>
+        <!-- 源码输出目录 -->
+        <outputDirectory>target/classes</outputDirectory>
+        <!-- 测试源码输出目录 -->
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <!-- 构建项目名称, 默认值 ${project.artifactId}-${project.version} -->
+        <finalName>${project.finalName}</finalName>
+
+
+        <filters>
+        </filters>
+
+        <!-- 描述了项目相关的资源路径列表，例如和项目相关的属性文件，这些资源被包含在最终的打包文件里 -->
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <!--根据profile.active选择激活不同的配置文件-->
+                <directory>${project.basedir}/src/main/resources</directory>
+                <!--开启配置文件过滤, 配置文件可引用maven属性-->
                 <filtering>true</filtering>
+                <targetPath>${project.basedir}/target/classes</targetPath>
             </resource>
         </resources>
 
+        <!-- 描述了项目相关的测试资源路径列表，例如和项目相关的属性文件，这些资源被包含在最终的打包文件里 -->
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
 
         <plugins>
+            <!--编译插件-->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
                 <configuration>
-                    <fork>true</fork>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
-
+            <!--资源处理插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -269,6 +365,15 @@
                         <delimiter>@</delimiter>
                     </delimiters>
                     <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
+            <!--springboot 插件-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
                 </configuration>
             </plugin>
 
