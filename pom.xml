@@ -113,6 +113,14 @@
         <!--///////////////////////// spring boot core /////////////////////////-->
 
 
+        <!--///////////////////////// session /////////////////////////-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <!--///////////////////////// session /////////////////////////-->
+
+
         <!--///////////////////////// configuration /////////////////////////-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
